@@ -20,11 +20,11 @@ Modify hostname, timezone & locale:
 * Add your SSH public key in /home/pi/.ssh/authorized_keys
 
 ## How to run Pi-hole with dnscrypt-proxy on Docker on Raspberry Pi Zero
-* Prepare SD card & Ansible configuration
+* [Prepare SD card](#how-to-prepare-sd-card-with-raspbian-lite--network-access) & Ansible [configuration](#configuration)
 * Run Ansible playbook:<br/>
     `ansible-playbook pihole.yml --ask-vault-pass --key-file "/path/to/ssh/private/key"`
 
 ## How to run Pi-hole with dnscrypt-proxy & pioled on Docker on Raspberry Pi Zero
-* Prepare SD card & Ansible configuration
+* [Prepare SD card](#how-to-prepare-sd-card-with-raspbian-lite--network-access) & Ansible [configuration](#configuration)
 * Run Ansible playbook:<br/>
     `ansible-playbook pihole-pioled.yml --ask-vault-pass --key-file "/path/to/ssh/private/key"`
