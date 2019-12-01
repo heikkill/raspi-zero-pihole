@@ -12,11 +12,14 @@ The Ansible playbooks contain tasks to:
 ## Configuration
 Modify content of these files accordingly and remove .template-postfix:
 * [hosts.ini.template](hosts.ini.template): IP of RasPi0
-* [secrets.vault.yml.template](group_vars/secrets.vault.yml.template): Passwords
+* [group_vars/secrets.vault.yml.template](group_vars/secrets.vault.yml.template): Passwords
   * Use [ansible-vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html#encrypting-unencrypted-files) to encrypt the secrets
 
 Modify hostname, timezone & locale:
-* [raspi.yml](group_vars/raspi.yml)
+* [group_vars/raspi.yml](group_vars/raspi.yml)
+
+Modify upstream DNS provider:
+* [roles/compose-pihole/defaults/main.yml](roles/compose-pihole/defaults/main.yml)
 
 ## How to prepare SD card with Raspbian Lite & network access
 * Download [Raspbian Buster Lite image](https://downloads.raspberrypi.org/raspbian_lite_latest)
