@@ -7,6 +7,8 @@ The Ansible playbooks contain tasks to:
 * Build a Raspberry Pi Zero -compatible Docker image of Pi-hole
 * Run Pi-hole & dnscrypt-proxy (and optionally Pioled) with docker-compose
 
+![](./doc/pihole.png)
+
 ## Configuration
 Modify content of these files accordingly and remove .template-postfix:
 * [hosts.ini.template](hosts.ini.template): IP of RasPi0
