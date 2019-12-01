@@ -5,6 +5,7 @@ The Ansible playbooks contain tasks to:
 * Configure the Raspberry Pi Zero with raspi-config
 * Install Docker & docker-compose
 * Build a Raspberry Pi Zero -compatible Docker image of Pi-hole
+* Build a Docker image for displaying Pi-hole stats on a PiOLED display
 * Run Pi-hole & dnscrypt-proxy (and optionally Pioled) with docker-compose
 
 ![](./doc/pihole.png)
