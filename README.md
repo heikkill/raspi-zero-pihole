@@ -1,6 +1,12 @@
 # raspi-zero-pihole
 Ansible playbook(s) for setting up [Pi-hole](https://github.com/pi-hole/pi-hole), [dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy) and optionally [pioled](https://www.adafruit.com/product/3527), running on Docker on Raspbian on Raspberry Pi Zero.
 
+The Ansible playbooks contain tasks to:
+* Configure the Raspberry Pi Zero with raspi-config
+* Install Docker & docker-compose
+* Build a Raspberry Pi Zero -compatible Docker image of Pi-hole
+* Run Pi-hole & dnscrypt-proxy (and optionally Pioled) with docker-compose
+
 ## Configuration
 Modify content of these files accordingly and remove .template-postfix:
 * [hosts.ini.template](hosts.ini.template): IP of RasPi0
