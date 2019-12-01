@@ -1,5 +1,5 @@
 # raspi-zero-pihole
-Ansible playbook(s) for setting up pi-hole, dnscrypt-proxy and pioled, running on Docker on Raspbian on Raspberry Pi Zero.
+Ansible playbook(s) for setting up [Pi-hole](https://github.com/pi-hole/pi-hole), [dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy) and optionally [pioled](https://www.adafruit.com/product/3527), running on Docker on Raspbian on Raspberry Pi Zero.
 
 ## Configuration
 Modify content of these files accordingly and remove .template-postfix:
@@ -13,10 +13,11 @@ Modify hostname, timezone & locale:
 ## How to prepare SD card with Raspbian Lite & network access
 * Download [Raspbian Buster Lite image](https://downloads.raspberrypi.org/raspbian_lite_latest)
 * Flash the image to an SD card with [Balena etcher](https://www.balena.io/etcher/)
-* Add WiFi configuration if using Raspberry Pi Zero W
-  * TODO: wpa_supplicant.conf, ssh
+* Enable WiFi & SSH by placing these files to the boot partition of the SD card (if using Raspberry Pi Zero W)
+  * wpa_supplicant.conf ([see instructions](https://www.raspberrypi-spy.co.uk/2017/04/manually-setting-up-pi-wifi-using-wpa_supplicant-conf/) on file content)
+  * ssh (blank file)
 * Insert SD card to the RasPi0 and boot
-* Connect to RasPi0 using default credentials
+* Connect to RasPi0 using [default credentials](https://www.raspberrypi.org/documentation/linux/usage/users.md)
 * Add your SSH public key in /home/pi/.ssh/authorized_keys
 
 ## How to run Pi-hole with dnscrypt-proxy on Docker on Raspberry Pi Zero
