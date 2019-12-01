@@ -41,3 +41,9 @@ Modify upstream DNS provider:
 * [Prepare SD card](#how-to-prepare-sd-card-with-raspbian-lite--network-access) & Ansible [configuration](#configuration)
 * Run Ansible playbook:<br/>
     `ansible-playbook pihole-pioled.yml --ask-vault-pass --key-file "/path/to/ssh/private/key"`
+    
+## Tested with
+* Ansible 2.8.5
+* Raspbian Buster Lite 2019-09-26 
+* Docker 19.03.5
+* docker-compose 1.25.0
