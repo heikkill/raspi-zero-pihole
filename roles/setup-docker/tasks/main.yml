@@ -1,0 +1,69 @@
+---
+- name: Gather service & package facts
+  block:
+    - service_facts:
+    - block:
+      - package_facts:
+          manager: apt
+        failed_when: ansible_facts.packages|length == 0
+      rescue:
+        - shell: dpkg --list | tail -n +6 | cut -f3 -d " "
+          register: packages_facts
+        - set_fact:
+            ansible_facts: "{{ ansible_facts | combine({ 'packages': packages_facts.stdout_lines }) }}"
+  tags:
+    - docker
+
+- name: Install docker & docker-compose
+  block:
+    - name: Download docker setup script
+      get_url:
+        url: "{{ getdocker_script_url }}"
+        dest: "{{ getdocker_script_path }}"
+        mode: u+x
+    - name: Run docker setup script
+      shell: "{{ getdocker_script_path }}"
+    - name: Install docker-compose
+      apt:
+        name: docker-compose
+        update_cache: yes
+        state: present
+    - name: pi user to docker group
+      user:
+        name: pi
+        groups: docker
+        append: yes
+    - name: reset connection
+      meta: reset_connection
+  become: true
+  when: "'docker' not in services or 'docker-compose' not in ansible_facts.packages"
+  tags:
+    - docker
+
+- name: Install docker python stuff
+  block:
+    - name: Install pip & libffi-dev depenedency for docker-compose
+      apt:
+        name: python-pip,libffi-dev
+        update_cache: yes
+        state: latest
+      become: True
+    - name: Install python docker modules
+      pip:
+        name:
+          - docker
+          - docker-compose
+    - name: Fix python package dep w/ sym link
+      file:
+        src: /home/pi/.local/lib/python2.7/site-packages/backports/ssl_match_hostname
+        dest: /usr/lib/python2.7/dist-packages/backports/ssl_match_hostname
+        state: link
+      become: true
+    - name: Fix python package dep w/ sym link
+      file:
+        src: /home/pi/.local/lib/python2.7/site-packages/backports/shutil_get_terminal_size
+        dest: /usr/lib/python2.7/dist-packages/backports/shutil_get_terminal_size
+        state: link
+      become: true
+  tags:
+    - docker

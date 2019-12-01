@@ -1,0 +1,9 @@
+# Docker images to build
+pihole_image: pihole-rp0
+pihole_image_version: 1.0
+pioled_image: pioled
+pioled_image_version: 1.0
+
+# Docker images to pull
+dnscrypt_image: klutchell/dnscrypt-proxy
+dnscrypt_image_version: arm32v6-2.0.28

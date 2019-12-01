@@ -1,0 +1,4 @@
+pihole_git_repository: https://github.com/DHandspikerWade/docker-pi-hole.git
+pihole_git_branch: build-ftl
+pihole_git_checkout_path: /home/pi/pihole/
+pihole_dockerfile: Dockerfile_armel

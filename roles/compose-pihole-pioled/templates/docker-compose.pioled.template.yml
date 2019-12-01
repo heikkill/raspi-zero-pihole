@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  pioled:
+    build:
+      context: {{ pioled_build_path }}
+    image: {{ pioled_image }}:{{ pioled_image_version }}
+    container_name: pioled
+    restart: unless-stopped
+    networks:
+      piholenet:
+        ipv4_address: 10.0.0.4
+    dns:
+      - 127.0.0.1
+      - {{ dns }}
+    privileged: true
+    command: "python /opt/pioled/stats.py {{ hostvars[inventory_hostname]['ansible_env'].SSH_CONNECTION.split(' ')[2] }}"

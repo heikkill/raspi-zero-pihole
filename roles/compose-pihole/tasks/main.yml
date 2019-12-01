@@ -1,0 +1,19 @@
+---
+- name: Template the docker-compose file for pihole & dnscrypt
+  template:
+    src: templates/docker-compose.template.yml
+    dest: /tmp/docker-compose.yml
+    owner: pi
+    group: pi
+    mode: '0600'
+
+- name: Run pihole & dnscrypt w/ docker-compose
+  docker_compose:
+    project_name: dns
+    project_src: /tmp/
+    state: present
+
+- assert:
+    that:
+      - "pihole.pihole.state.running"
+      - "dnscrypt.dnscrypt.state.running"

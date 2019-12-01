@@ -1,0 +1,34 @@
+---
+- name: Copy files
+  copy:
+    src: files/
+    dest: "{{ pioled_build_path }}"
+  tags:
+    - pioled
+
+- name: Template the docker-compose file for pioled
+  template:
+    src: templates/docker-compose.pioled.template.yml
+    dest: /tmp/docker-compose.pioled.yml
+    owner: pi
+    group: pi
+    mode: '0600'
+  tags:
+    - pioled
+
+- name: Run pihole, dnscrypt & pioled w/ docker-compose
+  docker_compose:
+    project_name: dns
+    project_src: /tmp/
+    state: present
+    files:
+      - docker-compose.yml
+      - docker-compose.pioled.yml
+  tags:
+    - pioled
+
+- assert:
+    that:
+      - "pihole.pihole.state.running"
+      - "dnscrypt.dnscrypt.state.running"
+      - "pioled.pioled.state.running"

@@ -1,0 +1,3 @@
+raspi_hostname: pihole
+raspi_timezone: Europe/Helsinki
+raspi_locale: fi_FI.UTF-8

@@ -1,0 +1,11 @@
+---
+- include: setup.yml
+
+- name: Run Pihole & decrypt-proxy on Docker on Raspbery Pi Zero
+  hosts: all
+  vars_files:
+   - group_vars/secrets.vault.yml
+   - group_vars/docker.yml
+   - group_vars/raspi.yml
+  roles:
+    - compose-pihole

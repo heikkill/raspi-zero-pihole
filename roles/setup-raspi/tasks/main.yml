@@ -1,0 +1,50 @@
+---
+- name: Change password of pi user
+  user:
+    name: pi
+    password: "{{ vault_pi_password | password_hash('sha512') }}"
+  become: True
+
+- name: Update raspi-config itself
+  apt:
+    name: raspi-config
+    update_cache: yes
+    state: present
+    cache_valid_time: 3600
+  become: True
+
+- name: Set locale
+  shell: "raspi-config nonint do_change_locale {{ raspi_locale }}"
+  become: True
+
+- name: Change timezone
+  shell: "raspi-config nonint do_change_timezone {{ raspi_timezone }}"
+  become: True
+
+- name: Get hostname
+  shell: "raspi-config nonint get_hostname"
+  register: pi_hostname
+  changed_when: False
+
+- name: Change hostname
+  shell: "raspi-config nonint do_hostname {{ raspi_hostname }}"
+  when: pi_hostname.stdout != raspi_hostname
+  become: True
+
+- name: Get I2C status
+  shell: "raspi-config nonint get_i2c"
+  register: i2c_status
+  changed_when: False
+  tags:
+    - i2c
+
+- name: Enable I2C
+  shell: "raspi-config nonint do_i2c 0"
+  when: (i2c_status.stdout != '0')
+  become: True
+  tags:
+    - i2c
+
+- name: Reboot raspi
+  become: True
+  reboot:

@@ -1,0 +1,19 @@
+---
+- name: Checkout pihole from git
+  git:
+    repo: "{{ pihole_git_repository }}"
+    version: "{{ pihole_git_branch }}"
+    dest: "{{ pihole_git_checkout_path }}"
+
+- name: Build PiHole Docker image (will take several hours on RpiZero)
+  docker_image:
+    build:
+      path: "{{ pihole_git_checkout_path }}"
+      dockerfile: "{{ pihole_dockerfile }}"
+    name: "{{ pihole_image }}"
+    tag: "{{ pihole_image_version }}"
+
+- name: Cleanup PiHole build path
+  file:
+    state: absent
+    path: "{{ pihole_git_checkout_path }}"

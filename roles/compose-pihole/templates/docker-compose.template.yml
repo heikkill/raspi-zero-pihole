@@ -1,0 +1,51 @@
+version: "3"
+
+volumes:
+  pihole-etc:
+  pihole-dnsmasq:
+
+networks:
+  piholenet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/29
+
+services:
+  pihole:
+    container_name: pihole
+    image: {{ pihole_image }}:{{ pihole_image_version }}
+    restart: unless-stopped
+    ports:
+      - "80:80/tcp"
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "443:443/tcp"
+    environment:
+      - DNS1='10.0.0.2#5053'
+      - DNS2='10.0.0.2#5053'
+      - IPv6=false
+      - TZ='{{ raspi_timezone }}'
+      - WEBPASSWORD={{ vault_pihole_webpassword }}
+    networks:
+      piholenet:
+        ipv4_address: 10.0.0.3
+    dns:
+      - 127.0.0.1
+      - {{ dns }}
+    volumes:
+      - pihole-etc:/etc/pihole
+      - pihole-dnsmasq:/etc/dnsmasq.d
+  
+  dnscrypt:
+    container_name: dnscrypt
+    image: {{ dnscrypt_image }}:{{ dnscrypt_image_version }}
+    restart: unless-stopped
+    ports:
+    - "5053:5053/udp"
+    networks:
+      piholenet:
+        ipv4_address: 10.0.0.2
+    dns:
+      - 127.0.0.1
+      - {{ dns }}
