@@ -1,5 +1,5 @@
 ---
-- name: Template the docker-compose file for pihole & dnscrypt
+- name: Template the docker-compose file for pihole & dnscrypt-proxy
   template:
     src: templates/docker-compose.template.yml
     dest: /tmp/docker-compose.yml
@@ -7,7 +7,7 @@
     group: pi
     mode: '0600'
 
-- name: Run pihole & dnscrypt w/ docker-compose
+- name: Run pihole & dnscrypt-proxy w/ docker-compose
   docker_compose:
     project_name: dns
     project_src: /tmp/
